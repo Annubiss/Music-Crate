@@ -30,6 +30,7 @@ function Cover({
         <img
             src={src}
             alt={title}
+            onError={() => setFailed(true)}
             className={"object-cover bg-line " + className}
             />
     )
