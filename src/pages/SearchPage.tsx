@@ -1,10 +1,8 @@
 import {useEffect, useState } from "react"
 import type { SubmitEvent } from "react"
 import type { Album } from "../types"
-import type { Song }  from "../types"
 import { searchAlbums } from "../api/musicbrainz"
 import AlbumCard from "../components/AlbumCard"
-import SongCard from "../components/SongCard"
 import Button from "../components/Button"
 import AlbumRow from "../components/AlbumRow"
 import AlbumCardSkeleton from "../components/AlbumCardSkeleton"
@@ -13,8 +11,6 @@ type viewMode = "grid" | "list"
 type Status = "idle" | "loading" | "error" | "success"
 
 function SearchPage() {
-  const [songs, setSongs] = useState<Song[]>([])
-  const [selectedSong, setSelectedSong] = useState<Song | null>(null)
   const [view, setView] = useState<viewMode>("grid")
 
   const [query, setQuery] = useState("");
@@ -67,19 +63,6 @@ function SearchPage() {
     }
   }
 
-
-  function addSong() {
-    const newSong: Song = {
-      id: Date.now().toString(),
-      title: "Everywhere I Go",
-      artist: "Hollywood Undead",
-      year: 2009,
-      coverUrl: "https://placehold.co/100"
-    };
-
-    setSongs(prev => [...prev, newSong]);
-
-  }
   return (
       <div className="py-8">
         <h1 className="font-display text-4xl tracking-wide mb-8">Crate</h1>
@@ -147,29 +130,12 @@ function SearchPage() {
           )
         )}
 
-        {view === "grid" ? (
-          <p className="text-xs text-fog uppercase tracking-wide mt-2">Grid mode - {songs.length} {songs.length == 1 ? "track" : "tracks"}</p>
-        ) : (
-          <p className="text-xs text-fog uppercase tracking-wide mt-2">List mode - {songs.length} {songs.length == 1 ? "track" : "tracks"}</p>
-        )}
 
-        <Button onClick={addSong}>Add song</Button>
+       
 
         <Button variant="secondary" onClick={() => setView(view ==="grid" ? "list" : "grid")}>
           Switch to {view === "grid" ? "list" : "grid"} 
         </Button>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {songs.map(song => 
-          <SongCard
-          key={song.id}
-          song={song}
-          onSelect={setSelectedSong}
-          />
-        )}
-        </div>
-
-        {selectedSong && <p className="text-fog">Selected: {selectedSong.title}</p>}
       </div>
     )
 }
