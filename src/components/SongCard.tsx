@@ -1,17 +1,33 @@
-import type { Song } from "../types";
+import type { Song } from "../types"
+import Cover from "./Cover"
 
 type SongCardProps = {
     song: Song;
-    onSelect: (song: Song) => void;
 }
 
-function SongCard({song, onSelect} : SongCardProps) {
+function SongCard({ song }: SongCardProps) {
     return (
-        <div className="bg-surface px-5 py-3 border border-line rounded-lg flex flex-col gap-2" onClick={() => onSelect(song)}>
-            <h2 className="text-chalk font-display text-xl">{song.title}</h2>
-            <p className="text-fog text-sm">{song.artist}</p>
+        <div className="bg-surface border border-line rounded-lg overflow-hidden">
+            <Cover 
+                src={song.coverUrl}
+                title={song.title}
+                className="w-full aspect-square"
+                />
+
+            <div className="px-4 py-3">
+                <h2 className="font-display text-lg text-chalk truncate">
+                    {song.title}
+                </h2>
+                <p className="text-fog text-sm mt-1 truncate">{song.artist}</p>
+
+                {song.year && (
+                    <p className="text-fog text-xs mt-1">{song.year}</p>
+                )}
+            </div>
         </div>
-    );
+
+        
+    )
 }
 
-export default SongCard
+export default SongCard;

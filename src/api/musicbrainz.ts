@@ -34,6 +34,26 @@ type MBSSearchResponse = {
     "release-groups": MBReleaseGroup[];
 };
 
+type MBRecordingRelease = {
+    id: string;
+    title: string;
+    date?: string;
+    "release-group"?: { id: string };
+}
+
+type MBRecording = {
+    id: string; 
+    title: string;
+    length?: number;
+    "artist-credit"?: { name: string }[];
+    releases?: MBRecordingRelease[];
+}
+
+type MBRecordingSearchResponse = {
+    count: number;
+    recordings: MBRecording[];
+}
+
 function toAlbum(rg: MBReleaseGroup) : Album {
     return {
         id: rg.id,
@@ -45,6 +65,24 @@ function toAlbum(rg: MBReleaseGroup) : Album {
         coverUrl: `https://coverartarchive.org/release-group/${rg.id}/front-250`,
     };
 } 
+
+function toSong(rec: MBRecording) : Song {
+    const release = rec.releases?.[0]
+    const groupId = release?.["release-group"]?.id
+
+    return {
+        id: rec.id,
+        title: rec.title,
+        artist: rec["artist-credit"]?.[0]?.name ?? "Unknown artist",
+        durationMs: rec.length,
+        year: release?.date
+              ? Number(release.date.slice(0,4))
+              : undefined,
+        coverUrl: groupId
+                  ? `https://coverartarchive.org/release-group/${groupId}/front-250`
+                  : undefined,
+    }
+}
 
 export async function searchAlbums(query: string) : Promise<Album[]> {
 
@@ -59,6 +97,23 @@ export async function searchAlbums(query: string) : Promise<Album[]> {
     const data: MBSSearchResponse = await res.json()
 
     return data["release-groups"].map(toAlbum)
+}
+
+export async function searchSongs(query: string): Promise<Song[]> {
+    const url = 
+        `${BASE}/recording` +
+        `?query=${encodeURIComponent(query)}&fmt=json&limit=25`
+
+        await waitForTurn()
+        const res = await fetch(url)
+
+        if(!res.ok) {
+            throw new Error(`Server responded with ${res.status}`)
+        }
+
+        const data: MBRecordingSearchResponse = await res.json()
+
+        return data.recordings.map(toSong)
 }
 
 export async function getAlbum(id: string) : Promise<Album> {

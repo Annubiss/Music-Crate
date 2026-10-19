@@ -1,37 +1,49 @@
 import {useEffect, useState } from "react"
 import type { SubmitEvent } from "react"
 import type { Album } from "../types"
-import { searchAlbums } from "../api/musicbrainz"
+import type { Song } from "../types"
+import { searchAlbums, searchSongs } from "../api/musicbrainz"
 import AlbumCard from "../components/AlbumCard"
 import Button from "../components/Button"
 import AlbumRow from "../components/AlbumRow"
 import AlbumCardSkeleton from "../components/AlbumCardSkeleton"
+import SongCard from "../components/SongCard"
+import SongRow from "../components/SongRow"
+
 
 type viewMode = "grid" | "list"
 type Status = "idle" | "loading" | "error" | "success"
+type SearchMode = "albums" | "songs"
 
 function SearchPage() {
   const [view, setView] = useState<viewMode>("grid")
 
   const [query, setQuery] = useState("");
   const [albums, setAlbums] = useState<Album[]>([])
+  const [songs, setSongs] = useState<Song[]>([])
   const [status, setStatus] = useState<Status>("idle")
+  const [mode, setMode] = useState<SearchMode>("albums")
+  const resultCount = mode == "albums" ? albums.length : songs.length
 
 
-  async function runSearch(term: string) {
+  async function runSearch(term: string, searchMode: SearchMode) {
     const trimmed = term.trim()
 
     if(trimmed === "") {
       setStatus("idle")
       setAlbums([])
+      setSongs([])
       return;
     }
 
     setStatus("loading")
 
     try {
-      const results = await searchAlbums(trimmed)
-      setAlbums(results)
+      if(searchMode == "albums") {
+        setAlbums(await searchAlbums(trimmed))
+      } else {
+        setSongs(await searchSongs(trimmed))
+      }
       setStatus("success")
     } catch (err) {
       console.error(err)
@@ -41,9 +53,9 @@ function SearchPage() {
 
 
   useEffect(() => {
-    const timer = setTimeout(() => runSearch(query), 500)
+    const timer = setTimeout(() => runSearch(query, mode), 500)
     return () => clearTimeout(timer) 
-}, [query])
+}, [query, mode])
 
 
   async function handleSearch(e: SubmitEvent) {
@@ -57,6 +69,7 @@ function SearchPage() {
       const results = await searchAlbums(query)
       setAlbums(results)
       setStatus("success")
+      
     } catch (err) {
       console.error(err)
       setStatus("error")
@@ -76,6 +89,25 @@ function SearchPage() {
           />
           <Button>Search</Button>
         </form>
+
+
+        <div className="flex gap-2 mb-8">
+          <Button
+            variant={mode == "albums" ? "primary" : "secondary"}
+            onClick={() => setMode("albums")}
+            >
+              Albums
+            </Button>
+
+            <Button
+              variant={mode == "songs" ? "primary" : "secondary"}
+              onClick={() => setMode("songs")}
+              >
+                Songs
+            </Button>
+        </div>
+
+
 
 
         {status === "idle" && (
@@ -102,11 +134,11 @@ function SearchPage() {
             <p className="text-chalk">Results not loaded</p>
             <p className="text-fog text-sm mt-1">Check the connection and try again</p>
             <div className="mt-4">
-              <Button onClick={() => runSearch(query)}>Try again</Button>
+              <Button onClick={() => runSearch(query, mode)}>Try again</Button>
             </div>
           </div>
         )}
-        {status === "success" && albums.length === 0 && (
+        {status === "success" && resultCount === 0 && (
           <div className="text-center py-12">
             <p className="text-chalk">No results for "{query}"</p>
             <p className="text-fog text-sm mt-1">
@@ -114,7 +146,7 @@ function SearchPage() {
             </p>
           </div>  
         )}
-        {status === "success" && albums.length > 0 && (
+        {status === "success" && mode == "albums" && resultCount > 0 && (
           view === "grid" ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {albums.map(album => (
@@ -128,6 +160,25 @@ function SearchPage() {
               ))}
             </div>
           )
+
+        
+        )}
+
+        {status == "success" && mode == "songs" && resultCount > 0 && (
+          view == "grid" ? (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {songs.map(song => (
+                <SongCard key={song.id} song={song} />
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {songs.map(song => (
+                <SongRow key={song.id} song={song}/>
+              ))}
+            </div>
+          )
+        
         )}
 
 
