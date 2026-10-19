@@ -86,62 +86,32 @@ function toSong(rec: MBRecording) : Song {
 
 export async function searchAlbums(query: string) : Promise<Album[]> {
 
-    const url = `${BASE}/release-group?query=${encodeURIComponent(query)}&fmt=json&limit=12`
-    await waitForTurn()
-    const res = await fetch(url);
-
-    if(!res.ok) {
-        throw new Error(`Server responded with ${res.status}`)
-    }
-
-    const data: MBSSearchResponse = await res.json()
+    const data = await mbFetch<MBSSearchResponse>(
+        `/release-group?query=${encodeURIComponent(query)}&fmt=json&limit=12`
+    )
 
     return data["release-groups"].map(toAlbum)
 }
 
 export async function searchSongs(query: string): Promise<Song[]> {
-    const url = 
-        `${BASE}/recording` +
-        `?query=${encodeURIComponent(query)}&fmt=json&limit=25`
-
-        await waitForTurn()
-        const res = await fetch(url)
-
-        if(!res.ok) {
-            throw new Error(`Server responded with ${res.status}`)
-        }
-
-        const data: MBRecordingSearchResponse = await res.json()
-
+    const data = await mbFetch<MBRecordingSearchResponse>(
+        `/recording?query=${encodeURIComponent(query)}&fmt=json&limit=25`
+    )
         return data.recordings.map(toSong)
 }
 
 export async function getAlbum(id: string) : Promise<Album> {
-    const url = `${BASE}/release-group/${id}?fmt=json&inc=artist-credits`
-    await waitForTurn()
-    const res = await fetch(url)
-
-    if(!res.ok) {
-        throw new Error(`Server responded with ${res.status}`)
-    }
-
-    const data: MBReleaseGroup = await res.json()
+    const data = await mbFetch<MBReleaseGroup>(
+        `/release-group/${id}?fmt=json&inc=artist-credits`
+    )
 
     return toAlbum(data)
 }
 
 export async function getTracks(albumId: string) : Promise<Song[]> {
-        const url =
-      `${BASE}/release?release-group=${albumId}` +
-      `&fmt=json&inc=recordings&limit=1`;
-    await waitForTurn()
-    const res = await fetch(url);
-
-    if(!res.ok) {
-        throw new Error(`Server responded with ${res.status}`)
-    }
-
-    const data: MBReleaseResponse = await res.json()
+        const data = await mbFetch<MBReleaseResponse>(
+            `/release?release-group=${albumId}&fmt=json&inc=recordings&limit=1`
+        )
 
     const release = data.releases[0]
     if (!release) return []
@@ -167,4 +137,16 @@ async function waitForTurn() {
     if(wait > 0) {
         await new Promise(resolve => setTimeout(resolve, wait))
     }
+}
+
+async function mbFetch<T>(path: string):Promise<T> {
+    await waitForTurn();
+
+    const res = await fetch(`${BASE}${path}`)
+
+    if(!res.ok) {
+        throw new Error(`Server responded with ${res.status}`)
+    }
+
+    return res.json()
 }
