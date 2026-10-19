@@ -4,18 +4,12 @@ import type { Album, Song } from "../types"
 import { getAlbum } from "../api/musicbrainz"
 import { getTracks } from "../api/musicbrainz";
 import { Link } from "react-router";
+import { formatDuration } from "../lib/format";
+import { formatTotalDuration } from "../lib/format";
 
 type Status = "loading" | "error" | "success"
 
-function formatDuration(ms?: number) {
-    if(!ms) return ""
 
-    const totalSeconds = Math.floor(ms / 1000)
-    const minutes = Math.floor(totalSeconds /60)
-    const seconds = totalSeconds % 60
-
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`
-}
 
 function AlbumPage() {
     const { id } = useParams()
@@ -49,6 +43,10 @@ function AlbumPage() {
                 setTracksStatus("error")
             })
     }, [id])
+
+    const totalMs = tracks.reduce(
+        (sum, track) => sum + (track.durationMs ?? 0), 0
+    )
 
     if(status === 'loading') {
        return <p>Loading...</p>
@@ -95,6 +93,7 @@ function AlbumPage() {
                     
                     <p className="text-chalk text-sm mt-2">
                         {album.year} · {tracks.length} tracks
+                        {totalMs > 0 && ` · ${formatTotalDuration(totalMs)}`}
                     </p>
 
                     
