@@ -7,7 +7,7 @@ import { Link } from "react-router";
 import { formatDuration } from "../lib/format";
 import { formatTotalDuration } from "../lib/format";
 import { useCollection } from "../context/CollectionContext"
-import Button from "../components/Button"
+import SaveButton from "../components/SaveButton"
 
 type Status = "loading" | "error" | "success"
 
@@ -101,16 +101,7 @@ function AlbumPage() {
                     </p>
 
                     <div className="mt-6">
-                        <Button
-                            variant={collection.has(album.id) ? "secondary" : "primary"}
-                            onClick={() =>
-                                collection.has(album.id)
-                                ? collection.remove(album.id)
-                                : collection.add(album)
-                            }
-                        >
-                            {collection.has(album.id) ? "Remove" : "Save"}
-                        </Button>
+                        <SaveButton album={album} />
                     </div>
 
                     
