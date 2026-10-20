@@ -6,6 +6,8 @@ import { getTracks } from "../api/musicbrainz";
 import { Link } from "react-router";
 import { formatDuration } from "../lib/format";
 import { formatTotalDuration } from "../lib/format";
+import { useCollection } from "../context/CollectionContext"
+import Button from "../components/Button"
 
 type Status = "loading" | "error" | "success"
 
@@ -17,6 +19,8 @@ function AlbumPage() {
     const [status, setStatus] = useState<Status>("loading")
     const [tracks, setTracks] = useState<Song[]>([])
     const [tracksStatus, setTracksStatus] = useState<Status>("loading")
+
+    const collection = useCollection()
 
     useEffect(() => {
         if(!id) return
@@ -95,6 +99,19 @@ function AlbumPage() {
                         {album.year} · {tracks.length} tracks
                         {totalMs > 0 && ` · ${formatTotalDuration(totalMs)}`}
                     </p>
+
+                    <div className="mt-6">
+                        <Button
+                            variant={collection.has(album.id) ? "secondary" : "primary"}
+                            onClick={() =>
+                                collection.has(album.id)
+                                ? collection.remove(album.id)
+                                : collection.add(album)
+                            }
+                        >
+                            {collection.has(album.id) ? "Remove" : "Save"}
+                        </Button>
+                    </div>
 
                     
              </div>
