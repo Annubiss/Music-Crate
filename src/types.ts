@@ -18,3 +18,9 @@ export type Album = {
     tracks?: Song[];
 };
 
+export type Playlist = {
+    id: string;
+    name: string;
+    createdAt: number;
+    songs: Song[];
+}

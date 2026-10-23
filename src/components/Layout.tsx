@@ -6,6 +6,7 @@ const navLinks =[
     { to: "/", label:"Search" },
     { to: "/genres", label: "Genres" },
     { to: "/collection", label: "Collection" },
+    {to: "/playlists", label: "Playlists"},
 ]
 
 const pillButton = "rounded-full border border-line bg-surface " + "px-4 py-2 text-sm text-chalk " +

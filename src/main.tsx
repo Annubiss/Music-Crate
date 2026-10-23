@@ -4,12 +4,15 @@ import './index.css'
 import App from './App.tsx'
 import { BrowserRouter  } from 'react-router'
 import { CollectionProvider } from './context/CollectionContext.tsx'
+import { PlaylistsProvider } from './context/PlaylistsContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <CollectionProvider>
-        <App />
+        <PlaylistsProvider>
+          <App />
+        </PlaylistsProvider>
       </CollectionProvider>
     </BrowserRouter>
   </StrictMode>,
