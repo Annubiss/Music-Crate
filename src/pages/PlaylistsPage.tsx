@@ -2,6 +2,7 @@ import { usePlaylists } from "../context/PlaylistsContext";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 
+
 function PlaylistsPage() {
     const { playlists, create } = usePlaylists()
     const [newName, setNewName] = useState("")
@@ -30,6 +31,7 @@ function PlaylistsPage() {
     }
 
     return (
+        <div className="py-8">
         <div className="mb-8 flex items-center justify-between gap-4">
             <div>
                 <h1 className="font-display text-4xl tracking-wide">
@@ -46,6 +48,22 @@ function PlaylistsPage() {
             <Button onClick={() => setIsCreating(true)}>
                 Add playlist
             </Button>
+            </div>
+
+            {playlists.length > 0 &&(
+                <ul className="flex flex-col gap-2">
+                    {playlists.map(playlist => (
+                        <li
+                            key={playlist.id}
+                            className="bg-surface border border-line rounded-lg p-3"
+                        >
+                            <h2 className="font-display text-lg text-chalk truncate">
+                                {playlist.name}
+                            </h2>
+                        </li>
+                     ))}
+                </ul>
+            )}
 
             {isCreating && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
@@ -74,6 +92,7 @@ function PlaylistsPage() {
                     </div>
                 </div>
             )}
+        
         </div>
     )
 }

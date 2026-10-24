@@ -1,5 +1,6 @@
 import type { Song } from "../types"
 import Cover from "./Cover"
+import AddToPlaylistButton from "./AddToPlaylistButton"
 
 type SongRowProps = {
     song: Song;
@@ -7,7 +8,8 @@ type SongRowProps = {
 
 function SongRow({ song }: SongRowProps) {
     return (
-        <div className="flex items-center gap-4 bg-surface border border-line rounded-lg p-3">
+        <div className="flex items-center bg-surface border border-line rounded-lg">
+            <div className="flex items-center min-w-0 flex-1 gap-4 p-2">
             <Cover 
                 src={song.coverUrl}
                 title={song.title}
@@ -23,6 +25,10 @@ function SongRow({ song }: SongRowProps) {
                 {song.year && (
                     <p className="text-fog text-xs ml-auto shrink-0">{song.year}</p>
                 )}
+            </div>
+            </div>
+            <div className="ml-auto shrink-0 self-stretch flex">
+                <AddToPlaylistButton song={song} size="sm" />
             </div>
         </div>
     )
