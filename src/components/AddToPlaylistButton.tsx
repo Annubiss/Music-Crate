@@ -25,6 +25,9 @@ function AddToPlaylistButton({song, size = "md"}: AddToPlaylistButtonProps) {
 
         {isOpen && (
             <Modal title="Add to playlist" onClose={() => setIsOpen(false)}>
+                {playlists.length == 0 &&(
+                    <p className="text-fog text-sm">No playlists yet. Create one on the Playlists page.</p>
+                )}
                 <ul className="flex flex-col gap-2">
                     {playlists.map(playlist => {
                         const inPlaylist = playlist.songs.some(s => s.id == song.id)
