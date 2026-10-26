@@ -1,13 +1,16 @@
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { usePlaylists } from "../context/PlaylistsContext";
 import SongRow from "../components/SongRow";
 import { formatTotalDuration } from "../lib/format";
 import Button from "../components/Button";
+import Modal from "../components/Modal";
 
 function PlaylistDetailsPage() {
     const { id } = useParams()
     const { playlists, remove } = usePlaylists()
     const navigate = useNavigate()
+    const [isConfirming, setIsConfirming] = useState(false)
 
     const playlist = playlists.find(p => p.id == id)
 
@@ -49,7 +52,7 @@ function PlaylistDetailsPage() {
                 <Button
                     variant="secondary"
                     label="Delete playlist"
-                    onClick={handleDelete}
+                    onClick={() => setIsConfirming(true)}
                 >
                     Delete
                 </Button>
@@ -74,6 +77,22 @@ function PlaylistDetailsPage() {
                         Search for a song and press + to add it here
                     </p>
                 </div>
+            )}
+
+            {isConfirming && (
+                <Modal title="Delete playlist?" onClose={() => setIsConfirming(false)}>
+                    <p className="text-fog text-sm mb-6">
+                        "{playlist.name} will be deleted. This can't be undone"
+                    </p>
+                    <div className="flex justify-end gap-2">
+                        <Button variant="secondary" onClick={() => setIsConfirming(false)}>
+                            Cancel
+                        </Button>
+                        <Button variant="saved" onClick={handleDelete}>
+                            Delete
+                        </Button>
+                    </div>
+                </Modal>
             )}
 
         </div>
