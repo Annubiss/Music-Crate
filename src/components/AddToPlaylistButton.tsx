@@ -3,6 +3,7 @@ import Button from "./Button"
 import type { ButtonSize } from "./Button"
 import { useState } from "react"
 import Modal from "./Modal"
+import { usePlaylists } from "../context/PlaylistsContext"
 
 type AddToPlaylistButtonProps = {
     song: Song;
@@ -11,6 +12,7 @@ type AddToPlaylistButtonProps = {
 
 function AddToPlaylistButton({song, size = "md"}: AddToPlaylistButtonProps) {
     const [isOpen, setIsOpen] = useState(false)
+    const { playlists, addSong, removeSong } = usePlaylists()
     return (
         <>
         <Button 
@@ -23,7 +25,27 @@ function AddToPlaylistButton({song, size = "md"}: AddToPlaylistButtonProps) {
 
         {isOpen && (
             <Modal title="Add to playlist" onClose={() => setIsOpen(false)}>
-                <p className="text-fog text-sm">{song.title}</p>     
+                <ul className="flex flex-col gap-2">
+                    {playlists.map(playlist => {
+                        const inPlaylist = playlist.songs.some(s => s.id == song.id)
+                        return(
+                        <li
+                            key={playlist.id}
+                            className="flex items-center justify-between gap-4 border border-line rounded-lg p-3"
+                        >
+                            <Button
+                                variant={inPlaylist ? "saved" : "primary"}
+                                label={inPlaylist ? "Remove from playlist" : "Add to playlist"}
+                                onClick={() => inPlaylist
+                                    ? removeSong(playlist.id, song.id)
+                                    : addSong(playlist.id, song)
+                                }
+                            >
+                                {inPlaylist ? "-" : "+"}
+                            </Button>
+                        </li>
+                    )})}
+                </ul>     
             </Modal>
         )}
 
