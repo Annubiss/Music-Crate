@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
 import { usePlaylists } from "../context/PlaylistsContext";
+import SongRow from "../components/SongRow";
 
 function PlaylistDetailsPage() {
     const { id } = useParams()
@@ -22,6 +23,16 @@ function PlaylistDetailsPage() {
             <h1 className="font-display text-4xl tracking-wide">
                 {playlist.name}
             </h1>
+
+            {playlist.songs.length > 0 && (
+                <ul className="flex flex-col gap-2 mt-8">
+                    {playlist.songs.map(song => (
+                        <li>
+                            <SongRow song={song} />
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     )
 }
