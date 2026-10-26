@@ -2,6 +2,7 @@ import { usePlaylists } from "../context/PlaylistsContext";
 import { useState } from "react";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
+import { Link } from "react-router";
 
 
 function PlaylistsPage() {
@@ -43,11 +44,13 @@ function PlaylistsPage() {
                     {playlists.map(playlist => (
                         <li
                             key={playlist.id}
-                            className="bg-surface border border-line rounded-lg p-3"
+                            className="bg-surface border border-line rounded-lg hover:border-fog transition-colors"
                         >
-                            <h2 className="font-display text-lg text-chalk truncate">
-                                {playlist.name}
-                            </h2>
+                            <Link to={`/playlists/${playlist.id}`} className="block p-3 cursor-pointer">
+                                <h2 className="font-display text-lg text-chalk truncate">
+                                    {playlist.name}
+                                </h2>
+                            </Link>
                         </li>
                      ))}
                 </ul>
