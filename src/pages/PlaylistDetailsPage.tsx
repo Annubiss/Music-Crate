@@ -1,11 +1,13 @@
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { usePlaylists } from "../context/PlaylistsContext";
 import SongRow from "../components/SongRow";
 import { formatTotalDuration } from "../lib/format";
+import Button from "../components/Button";
 
 function PlaylistDetailsPage() {
     const { id } = useParams()
-    const { playlists } = usePlaylists()
+    const { playlists, remove } = usePlaylists()
+    const navigate = useNavigate()
 
     const playlist = playlists.find(p => p.id == id)
 
@@ -23,8 +25,15 @@ function PlaylistDetailsPage() {
         (sum, song) => sum + (song.durationMs ?? 0), 0
     )
 
+    const handleDelete = () => {
+        remove(playlist.id)
+        navigate("/playlists", {replace: true})
+    }
+
     return (
         <div className="py-8">
+            <div className="mb-8 flex items-center justify-between gap-4">
+            <div>
             <h1 className="font-display text-4xl tracking-wide">
                 {playlist.name}
             </h1>
@@ -36,9 +45,18 @@ function PlaylistDetailsPage() {
                     {totalMs > 0 && ` · ${formatTotalDuration(totalMs)}`}
                 </p>
             )}
+            </div>
+                <Button
+                    variant="secondary"
+                    label="Delete playlist"
+                    onClick={handleDelete}
+                >
+                    Delete
+                </Button>
+            </div>
 
             {playlist.songs.length > 0 && (
-                <ul className="flex flex-col gap-2 mt-8">
+                <ul className="flex flex-col gap-2">
                     {playlist.songs.map(song => (
                         <li>
                             <SongRow song={song} />
