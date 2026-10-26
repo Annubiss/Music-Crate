@@ -33,6 +33,18 @@ function PlaylistDetailsPage() {
                     ))}
                 </ul>
             )}
+
+            {playlist.songs.length == 0 && (
+                <div className="text-center py-16">
+                    <p className="font-display text-2xl">
+                        This playlist is empty
+                    </p>
+                    <p className="text-fog text-sm mt-2">
+                        Search for a song and press + to add it here
+                    </p>
+                </div>
+            )}
+
         </div>
     )
 }
