@@ -14,7 +14,7 @@ function SaveButton ({ album, size = "md" }: SaveButtonProps) {
 
     return (
         <Button
-            variant={saved ? "saved" : "primary"}
+            variant={saved ? "danger" : "primary"}
             size={size}
             label={saved ? "remove from collection" : "Add to collection"}
             onClick={() => (saved ? remove(album.id) : add(album))}

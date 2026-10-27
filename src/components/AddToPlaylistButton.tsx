@@ -37,7 +37,7 @@ function AddToPlaylistButton({song, size = "md"}: AddToPlaylistButtonProps) {
                             className="flex items-center justify-between gap-4 border border-line rounded-lg p-3"
                         >
                             <Button
-                                variant={inPlaylist ? "saved" : "primary"}
+                                variant={inPlaylist ? "danger" : "primary"}
                                 label={inPlaylist ? "Remove from playlist" : "Add to playlist"}
                                 onClick={() => inPlaylist
                                     ? removeSong(playlist.id, song.id)

@@ -14,11 +14,10 @@ function CollectionPage() {
     } else if(sort == "title") {
         sortedAlbums.sort((a, b) => a.title.localeCompare(b.title))
     } else {
-        sortedAlbums.sort((a, b) => a.title.localeCompare(b.title))
+        sortedAlbums.sort((a, b) => a.artist.localeCompare(b.artist))
     }
 
     return (
-
         <div className="py-8">
             <h1 className="font-display text-4xl tracking-wide mb8">
                 Collection

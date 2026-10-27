@@ -108,7 +108,7 @@ function PlaylistDetailsPage() {
                         <Button variant="secondary" onClick={() => setIsConfirming(false)}>
                             Cancel
                         </Button>
-                        <Button variant="saved" onClick={handleDelete}>
+                        <Button variant="danger" onClick={handleDelete}>
                             Delete
                         </Button>
                     </div>
