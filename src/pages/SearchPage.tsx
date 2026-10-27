@@ -1,4 +1,5 @@
 import {useEffect, useState } from "react"
+import { useSearchParams } from "react-router"
 import type { SubmitEvent } from "react"
 import type { Album } from "../types"
 import type { Song } from "../types"
@@ -16,14 +17,23 @@ type Status = "idle" | "loading" | "error" | "success"
 type SearchMode = "albums" | "songs"
 
 function SearchPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const mode: SearchMode = searchParams.get("mode") === "songs" ? "songs" : "albums"
   const [view, setView] = useState<viewMode>("grid")
 
   const [query, setQuery] = useState("");
   const [albums, setAlbums] = useState<Album[]>([])
   const [songs, setSongs] = useState<Song[]>([])
   const [status, setStatus] = useState<Status>("idle")
-  const [mode, setMode] = useState<SearchMode>("albums")
   const resultCount = mode == "albums" ? albums.length : songs.length
+
+  function setMode(next: SearchMode) {
+    setSearchParams(prev => {
+      const params = new URLSearchParams(prev)
+      params.set("mode", next)
+      return params
+    })
+  }
 
 
   async function runSearch(term: string, searchMode: SearchMode) {

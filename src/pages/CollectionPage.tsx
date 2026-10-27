@@ -19,7 +19,7 @@ function CollectionPage() {
 
     return (
         <div className="py-8">
-            <h1 className="font-display text-4xl tracking-wide mb8">
+            <h1 className="font-display text-4xl tracking-wide mb-8">
                 Collection
             </h1>
 
@@ -40,7 +40,7 @@ function CollectionPage() {
                         value={sort}
                         onChange={e => setSort(e.target.value as SortMode)}
                         className={"bg-surface border border-line rounded-lg px-3 py-0.3 text-sm text-chalk " +
-                        "cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus:visible:outline-accent"}
+                        "cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"}
                         >
                             <option value="recent">Recently saved</option>
                             <option value="title">Title</option>

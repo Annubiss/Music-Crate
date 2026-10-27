@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 import SearchPage from "./pages/SearchPage";
-import NotFoundPage from "./pages/NotFoundPAge";
+import NotFoundPage from "./pages/NotFoundPage";
 import AlbumPage from "./pages/AlbumPage"
 import Layout from "./components/Layout";
 import CollectionPage from "./pages/CollectionPage"

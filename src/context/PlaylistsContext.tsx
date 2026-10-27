@@ -81,7 +81,7 @@ export function usePlaylists() {
     const value = useContext(PlaylistsContext)
 
     if(!value) {
-        throw new Error("usePlaylists must be used inside PlaylistProvider")
+        throw new Error("usePlaylists must be used inside PlaylistsProvider")
     }
 
     return value
