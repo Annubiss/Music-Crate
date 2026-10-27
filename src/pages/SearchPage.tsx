@@ -9,6 +9,7 @@ import AlbumRow from "../components/AlbumRow"
 import AlbumCardSkeleton from "../components/AlbumCardSkeleton"
 import SongCard from "../components/SongCard"
 import SongRow from "../components/SongRow"
+import FiltersButton from "../components/FiltersButton"
 
 
 type viewMode = "grid" | "list"
@@ -109,6 +110,7 @@ function SearchPage() {
               >
                 Songs
             </Button>
+            <FiltersButton />
         </div>
 
 

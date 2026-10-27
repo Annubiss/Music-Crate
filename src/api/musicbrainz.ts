@@ -139,7 +139,7 @@ async function waitForTurn() {
     }
 }
 
-async function mbFetch<T>(path: string):Promise<T> {
+async function mbRequest(path: string):Promise<Response> {
     await waitForTurn();
 
     const res = await fetch(`${BASE}${path}`)
@@ -148,5 +148,10 @@ async function mbFetch<T>(path: string):Promise<T> {
         throw new Error(`Server responded with ${res.status}`)
     }
 
+    return res
+}
+
+async function mbFetch<T>(path: string): Promise<T> {
+    const res = await mbRequest(path)
     return res.json()
 }
