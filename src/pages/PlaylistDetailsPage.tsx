@@ -8,9 +8,11 @@ import Modal from "../components/Modal";
 
 function PlaylistDetailsPage() {
     const { id } = useParams()
-    const { playlists, remove } = usePlaylists()
+    const { playlists, remove, rename } = usePlaylists()
     const navigate = useNavigate()
     const [isConfirming, setIsConfirming] = useState(false)
+    const [isRenaming, setIsRenaming] = useState(false)
+    const [newName, setNewName] = useState("")
 
     const playlist = playlists.find(p => p.id == id)
 
@@ -33,6 +35,19 @@ function PlaylistDetailsPage() {
         navigate("/playlists", {replace: true})
     }
 
+    const openRename = () => {
+        setNewName(playlist.name)
+        setIsRenaming(true)
+    }
+
+    const handleRename = () => {
+        const trimmed = newName.trim()
+        if(trimmed == "") return   
+
+        rename(playlist.id, trimmed)
+        setIsRenaming(false)
+    }
+
     return (
         <div className="py-8">
             <div className="mb-8 flex items-center justify-between gap-4">
@@ -49,6 +64,10 @@ function PlaylistDetailsPage() {
                 </p>
             )}
             </div>
+            <div className="flex gap-2">
+                <Button variant="secondary" onClick={openRename}>
+                    Rename
+                </Button>
                 <Button
                     variant="secondary"
                     label="Delete playlist"
@@ -56,6 +75,7 @@ function PlaylistDetailsPage() {
                 >
                     Delete
                 </Button>
+            </div>
             </div>
 
             {playlist.songs.length > 0 && (
@@ -94,7 +114,23 @@ function PlaylistDetailsPage() {
                     </div>
                 </Modal>
             )}
-
+                {isRenaming && (
+                    <Modal title="Rename playlist" onClose={() => setIsRenaming(false)}>
+                        <form onSubmit={e => {
+                            e.preventDefault()
+                            handleRename()
+                        }}
+                            className="flex gap-2">
+                            <input
+                                value={newName}
+                                onChange={e => setNewName(e.target.value)}
+                                autoFocus
+                                className="flex-1 bg-surface border border-line rounded-lg px-4 py-2 focus-visible:outline-accent"
+                            />
+                            <Button onClick={handleRename}>Save</Button>
+                        </form>
+                    </Modal>
+                )}
         </div>
     )
 }
