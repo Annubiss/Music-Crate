@@ -1,6 +1,5 @@
 import {useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
-import type { SubmitEvent } from "react"
 import type { Album } from "../types"
 import type { Song } from "../types"
 import { searchAlbums, searchSongs } from "../api/musicbrainz"
@@ -80,25 +79,6 @@ function SearchPage() {
     const timer = setTimeout(() => runSearch(query, mode), 500)
     return () => clearTimeout(timer) 
 }, [query, mode])
-
-
-  async function handleSearch(e: SubmitEvent) {
-    e.preventDefault()
-
-    if(query.trim() === "") return;
-
-    setStatus("loading")
-
-    try {
-      const results = await searchAlbums(query)
-      setAlbums(results)
-      setStatus("success")
-      
-    } catch (err) {
-      console.error(err)
-      setStatus("error")
-    }
-  }
 
   return (
       <div className="py-8">
