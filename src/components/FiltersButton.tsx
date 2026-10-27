@@ -12,6 +12,7 @@ function FiltersButton() {
     const [genres, setGenres] = useState<string[]>([])
     const [status, setStatus] = useState<Status>("loading")
     const [isListOpen, setIsListOpen] = useState(false)
+    const [search, setSearch] = useState("")
 
     useEffect(() => {
         if(!isOpen) return
@@ -29,6 +30,9 @@ function FiltersButton() {
         load()
     }, [isOpen])
 
+    const term = search.trim().toLocaleLowerCase()
+    const visibleGenres = genres.filter(g => g.includes(term))
+
     return (
         <>
             <Button variant="secondary" onClick={() => setIsOpen(true)}>
@@ -43,6 +47,8 @@ function FiltersButton() {
                             <div className="flex border border-line rounded-lg focus-within:border-accent">
                                 <input 
                                     aria-label="Add a genre"
+                                    value={search}
+                                    onChange={e => setSearch(e.target.value)}
                                     placeholder="Add a genre"
                                     className="flex-1 min-w-0 bg-transparent px-4 py-2 placeholder:text-fog focus:outline-none" 
                                 />
@@ -77,12 +83,18 @@ function FiltersButton() {
 
                         {status === "success" && (
                             <ul>
-                                {genres.map(g => (
+                                {visibleGenres.map(g => (
                                     <li key={g} className="capitalize text-sm px-4 py-2">
                                         {g}
                                     </li>
                                 ))}
                             </ul>
+                        )}
+
+                        {status === "success" && visibleGenres.length === 0 && (
+                            <p>
+                                No genres match "{search.trim()}"
+                            </p>
                         )}
                         </div>
             )}
