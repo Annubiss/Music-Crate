@@ -126,6 +126,19 @@ export async function getTracks(albumId: string) : Promise<Song[]> {
     );
 }
 
+let genresCache: string[] | null = null
+
+export async function getGenres(): Promise<string[]> {
+    if(genresCache) return genresCache
+
+    const res = await mbRequest("/genre/all?fmt=txt")
+    const text = await res.text()
+
+    genresCache = text.split("\n").filter(g => g !== "")
+
+    return genresCache
+}
+
 let nextSlot = 0
 
 async function waitForTurn() {
