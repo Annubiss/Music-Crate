@@ -19,7 +19,7 @@ type SearchMode = "albums" | "songs"
 function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const mode: SearchMode = searchParams.get("mode") === "songs" ? "songs" : "albums"
-  const [view, setView] = useState<viewMode>("grid")
+  const view: viewMode = searchParams.get("view") === "list" ? "list" : "grid"
 
   const [query, setQuery] = useState("");
   const [albums, setAlbums] = useState<Album[]>([])
@@ -27,14 +27,21 @@ function SearchPage() {
   const [status, setStatus] = useState<Status>("idle")
   const resultCount = mode == "albums" ? albums.length : songs.length
 
-  function setMode(next: SearchMode) {
+  function updateParam(key: string, value: string) {
     setSearchParams(prev => {
       const params = new URLSearchParams(prev)
-      params.set("mode", next)
+      params.set(key, value)
       return params
     })
   }
 
+  function setMode(next: SearchMode){
+    updateParam("mode", next)
+  }
+
+  function setView(next: viewMode){
+    updateParam("view", next)
+  }
 
   async function runSearch(term: string, searchMode: SearchMode) {
     const trimmed = term.trim()
