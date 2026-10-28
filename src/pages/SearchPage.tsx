@@ -29,6 +29,7 @@ function SearchPage() {
   }
 
   const fullQuery = buildQuery(query, filters)
+  const hasFilters = Object.values(filters).some(value => value !== "")
 
   const [albums, setAlbums] = useState<Album[]>([])
   const [songs, setSongs] = useState<Song[]>([])
@@ -155,9 +156,9 @@ function SearchPage() {
         )}
         {status === "success" && resultCount === 0 && (
           <div className="text-center py-12">
-            <p className="text-chalk">No results for "{fullQuery}"</p>
+            <p className="text-chalk">{query.trim() !== "" ? `No results for "${query.trim()}"` : "No results"}</p>
             <p className="text-fog text-sm mt-1">
-              Check the typing or try another name
+              {hasFilters ? "Try removing some filters" : "Check the typing or try another name"}
             </p>
           </div>  
         )}
