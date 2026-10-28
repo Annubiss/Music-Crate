@@ -101,7 +101,7 @@ function SearchPage() {
           placeholder="Search artist or album"
           className="flex-1 bg-surface border border-line rounded-lg px-4 py-2 text-chalk placeholder:text-fog focus:outline-none focus:border-accent"
           />
-          <Button>Search</Button>
+        
         </form>
 
 
