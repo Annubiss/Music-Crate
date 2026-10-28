@@ -4,9 +4,16 @@ import Modal from "./Modal";
 import FilterSection from "./FilterSectionProps";
 import { getGenres } from "../api/musicbrainz";
 import type { Filters } from "../types"
+import OptionsGroup from "./OptionGroup";
 
 
 type Status = "loading" | "error" | "success"
+
+const TYPE_OPTIONS = [
+    { value: "album", label: "Album"},
+    { value: "ep", label: "EP"},
+    { value: "single", label: "Single"},
+]
 
 type FilterButtonProps = {
     filters: Filters;
@@ -169,6 +176,13 @@ function FiltersButton({ filters, onChange }: FilterButtonProps) {
                                 ))}
                             </ul>
                         )}
+                    </FilterSection>
+                    <FilterSection title="Type">
+                        <OptionsGroup 
+                            options={TYPE_OPTIONS}
+                            value={filters.type}
+                            onChange={value => onChange("type", value)}
+                        />
                     </FilterSection>
                 </Modal>
             )}

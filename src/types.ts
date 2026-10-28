@@ -27,4 +27,5 @@ export type Playlist = {
 
 export type Filters = {
     genre: string;
+    type: string;
 }
