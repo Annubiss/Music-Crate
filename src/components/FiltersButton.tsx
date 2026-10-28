@@ -64,6 +64,12 @@ function FiltersButton({ filters, onChange }: FilterButtonProps) {
         }
     }
 
+    function removeGenre(genre: string) {
+        const next = selected.filter(g => g !== genre).join(",")
+
+        onChange("genre", next)
+    }
+
 
 
     return (
@@ -134,8 +140,32 @@ function FiltersButton({ filters, onChange }: FilterButtonProps) {
                             </p>
                         )}
                         </div>
-            )}
-            </div>
+                            )}
+                        </div>
+
+                        {selected.length > 0 && (
+                            <ul className="flex flex-wrap gap-2 mt-3">
+                                {selected.map(g => (
+                                    <li 
+                                        key={g}
+                                        className={"flex items-center gap-1 bg-accent text-ink rounded-full pl-3 " +
+                                            "pr-1 py-1 text-sm"}
+                                    
+                                    >
+                                        <span className="capitalize">{g}</span>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => removeGenre(g)}
+                                            aria-label={`Remove ${g}`}
+                                            className="w-5 h-5 rounded-full hover:bg-black/20 cursor-pointer"
+                                        >
+                                            ×
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </FilterSection>
                 </Modal>
             )}
