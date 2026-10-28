@@ -6,7 +6,6 @@ import { getTracks } from "../api/musicbrainz";
 import { Link } from "react-router";
 import { formatDuration } from "../lib/format";
 import { formatTotalDuration } from "../lib/format";
-import { useCollection } from "../context/CollectionContext"
 import SaveButton from "../components/SaveButton"
 
 type Status = "loading" | "error" | "success"
@@ -20,7 +19,7 @@ function AlbumPage() {
     const [tracks, setTracks] = useState<Song[]>([])
     const [tracksStatus, setTracksStatus] = useState<Status>("loading")
 
-    const collection = useCollection()
+    
 
     useEffect(() => {
         if(!id) return
