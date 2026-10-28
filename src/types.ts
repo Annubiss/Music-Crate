@@ -24,3 +24,7 @@ export type Playlist = {
     createdAt: number;
     songs: Song[];
 }
+
+export type Filters = {
+    genre: string;
+}

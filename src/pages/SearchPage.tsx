@@ -10,6 +10,7 @@ import AlbumCardSkeleton from "../components/AlbumCardSkeleton"
 import SongCard from "../components/SongCard"
 import SongRow from "../components/SongRow"
 import FiltersButton from "../components/FiltersButton"
+import type { Filters } from "../types"
 
 
 type viewMode = "grid" | "list"
@@ -21,6 +22,11 @@ function SearchPage() {
   const mode: SearchMode = searchParams.get("mode") === "songs" ? "songs" : "albums"
   const view: viewMode = searchParams.get("view") === "list" ? "list" : "grid"
   const query = searchParams.get("q") ?? ""
+
+  const filters: Filters = {
+    genre: searchParams.get("genre") ?? ""
+  }
+
   const [albums, setAlbums] = useState<Album[]>([])
   const [songs, setSongs] = useState<Song[]>([])
   const [status, setStatus] = useState<Status>("idle")
@@ -110,7 +116,7 @@ function SearchPage() {
               >
                 Songs
             </Button>
-            <FiltersButton />
+            <FiltersButton filters={filters} onChange={updateParam}/>
         </div>
 
 

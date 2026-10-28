@@ -3,11 +3,17 @@ import Button from "./Button";
 import Modal from "./Modal";
 import FilterSection from "./FilterSectionProps";
 import { getGenres } from "../api/musicbrainz";
+import type { Filters } from "../types"
 
 
 type Status = "loading" | "error" | "success"
 
-function FiltersButton() {
+type FilterButtonProps = {
+    filters: Filters;
+    onChange: (key: keyof Filters, value: string) => void;
+}
+
+function FiltersButton({ filters, onChange }: FilterButtonProps) {
     const [isOpen, setIsOpen] = useState(false)
     const [genres, setGenres] = useState<string[]>([])
     const [status, setStatus] = useState<Status>("loading")
@@ -30,8 +36,35 @@ function FiltersButton() {
         load()
     }, [isOpen])
 
+
+    const selected = filters.genre ? filters.genre.split(",") : []
     const term = search.trim().toLocaleLowerCase()
-    const visibleGenres = genres.filter(g => g.includes(term))
+    const visibleGenres = genres.filter(g => g.includes(term) && !selected.includes(g))
+
+    function addGenre(genre: string) {
+        const next = [...selected, genre].sort().join(",")
+
+        onChange("genre", next)
+        setSearch("")
+        setIsListOpen(false)
+    }
+
+    function handleEnter() {
+        if(term === "") return
+
+        if(selected.includes(term)) {
+            setSearch("")
+            return
+        }
+
+        if(genres.includes(term)) {
+            addGenre(term)
+        } else {
+            setIsListOpen(true)
+        }
+    }
+
+
 
     return (
         <>
@@ -49,6 +82,10 @@ function FiltersButton() {
                                     aria-label="Add a genre"
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
+                                    onKeyDown={e => {
+                                        
+                                        if(e.key == "Enter") handleEnter()
+                                    }}
                                     placeholder="Add a genre"
                                     className="flex-1 min-w-0 bg-transparent px-4 py-2 placeholder:text-fog focus:outline-none" 
                                 />
