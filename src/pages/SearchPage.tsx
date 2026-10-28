@@ -11,6 +11,7 @@ import SongCard from "../components/SongCard"
 import SongRow from "../components/SongRow"
 import FiltersButton from "../components/FiltersButton"
 import type { Filters } from "../types"
+import { buildQuery } from "../lib/query"
 
 
 type viewMode = "grid" | "list"
@@ -26,6 +27,8 @@ function SearchPage() {
   const filters: Filters = {
     genre: searchParams.get("genre") ?? ""
   }
+
+  const fullQuery = buildQuery(query, filters)
 
   const [albums, setAlbums] = useState<Album[]>([])
   const [songs, setSongs] = useState<Song[]>([])
@@ -83,9 +86,9 @@ function SearchPage() {
 
 
   useEffect(() => {
-    const timer = setTimeout(() => runSearch(query, mode), 500)
+    const timer = setTimeout(() => runSearch(fullQuery, mode), 500)
     return () => clearTimeout(timer) 
-}, [query, mode])
+}, [fullQuery, mode])
 
   return (
       <div className="py-8">
@@ -146,13 +149,13 @@ function SearchPage() {
             <p className="text-chalk">Results not loaded</p>
             <p className="text-fog text-sm mt-1">Check the connection and try again</p>
             <div className="mt-4">
-              <Button onClick={() => runSearch(query, mode)}>Try again</Button>
+              <Button onClick={() => runSearch(fullQuery, mode)}>Try again</Button>
             </div>
           </div>
         )}
         {status === "success" && resultCount === 0 && (
           <div className="text-center py-12">
-            <p className="text-chalk">No results for "{query}"</p>
+            <p className="text-chalk">No results for "{fullQuery}"</p>
             <p className="text-fog text-sm mt-1">
               Check the typing or try another name
             </p>
