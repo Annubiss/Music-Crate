@@ -70,12 +70,15 @@ function FiltersButton({ filters, onChange }: FilterButtonProps) {
         onChange("genre", next)
     }
 
-
+    const active: string[] = []
+    if( selected.length > 0 ) active.push("Genres")
+    
+        const buttonLabel = active.length > 0 ? `Filter: ${active.join(", ")}` : "Filter"
 
     return (
         <>
             <Button variant="secondary" onClick={() => setIsOpen(true)}>
-                Filter
+                {buttonLabel}
             </Button>
 
             {isOpen && (
