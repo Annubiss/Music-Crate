@@ -1,6 +1,8 @@
 import type { ReactNode } from "react"
 import { useEffect, useId, useRef, useState } from "react"
 
+const FOCUSABLE = "button:not([disabled]), input:not([disabled]), a[href], select, textarea"
+
 type ModalProps = {
     title: string;
     onClose: () => void;
@@ -17,6 +19,26 @@ function Modal({title, onClose, children}: ModalProps) {
         function handleKey(event: KeyboardEvent){
             if(event.key == "Escape"){
                 onClose()
+            }
+            if(event.key === "Tab") {
+                const dialog = dialogRef.current
+                if (!dialog) return
+
+                const focusable = dialog.querySelectorAll<HTMLElement>(FOCUSABLE)
+
+                if (focusable.length === 0) return
+
+                const first = focusable[0]
+                const last = focusable[focusable.length - 1]
+                const current = document.activeElement
+
+                if (event.shiftKey && (current === first || current === dialog)) {
+                    event.preventDefault()
+                    last.focus()
+                } else if (!event.shiftKey && current === last) {
+                    event.preventDefault()
+                    first.focus()
+                }
             }
         }
         window.addEventListener("keydown", handleKey)
