@@ -88,6 +88,7 @@ function FiltersButton({ filters, onChange, mode }: FilterButtonProps) {
     const active: string[] = []
     if( selected.length > 0 ) active.push("Genres")
     if( mode === "albums" && filters.type !== "") active.push("Type")
+    if( filters.category !== "") active.push("Category")
     
         const buttonLabel = active.length > 0 ? `Filter: ${active.join(", ")}` : "Filter"
 
