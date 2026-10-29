@@ -1,7 +1,13 @@
 import type { Filters, SearchMode } from "../types"
 
-function anyOf(field: string, value: string): string {
-    const items = value.split(",").map(v => `${field}:${v}`)
+const DURATION_RANGES: Record<string, string> = {
+    short: "[0 TO 179999]",
+    medium: "[180000 TO 359999]",
+    long: "[360000 TO *]",
+}
+
+function anyOf(field: string, value: string[]): string {
+    const items = value.map(v => `${field}:${v}`)
     return `(${items.join(" OR ")})`
 }
 
@@ -18,11 +24,20 @@ export function buildQuery(text: string, filters: Filters, mode: SearchMode): st
     }
 
     if( mode === "albums" && filters.type !== "") {
-        parts.push(anyOf("primarytype", filters.type))
+        parts.push(anyOf("primarytype", filters.type.split(",")))
     }
 
     if( filters.category !== "") {
-        parts.push(anyOf("secondarytype", filters.category))
+        parts.push(anyOf("secondarytype", filters.category.split(",")))
+    }
+
+    if( mode === "songs" && filters.duration !== "") {
+        const ranges = filters.duration
+            .split(",")
+            .map(d => DURATION_RANGES[d])
+            .filter(r => r !== undefined)
+
+        if( ranges.length > 0) parts.push(anyOf("dur", ranges))
     }
 
     return parts.join(" AND ")
