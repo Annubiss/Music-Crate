@@ -29,6 +29,7 @@ export type Filters = {
     genre: string;
     type: string;
     category: string;
+    duration: string,
 }
 
 export type SearchMode = "albums" | "songs"

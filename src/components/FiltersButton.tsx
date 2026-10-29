@@ -22,6 +22,12 @@ const CATEGORY_OPTIONS = [
     {value: "soundtrack", label: "Soundtrack"},
 ]
 
+const DURATION_OPTIONS = [
+    { value: "short", label: "Under 3 min"},
+    { value: "medium", label: "3-6 min"},
+    { value: "long", label: "Over 6 min"},
+]
+
 type FilterButtonProps = {
     filters: Filters;
     onChange: (key: keyof Filters, value: string) => void;
@@ -203,6 +209,15 @@ function FiltersButton({ filters, onChange, mode }: FilterButtonProps) {
                             onChange={value => onChange("category", value)}
                         />
                     </FilterSection>
+                    {mode === "songs" && (
+                        <FilterSection title="Duration">
+                            <OptionsGroup
+                                options={DURATION_OPTIONS}
+                                value={filters.duration}
+                                onChange={value => onChange("duration", value)}
+                            />
+                        </FilterSection>
+                    )}
                 </Modal>
             )}
         </>
