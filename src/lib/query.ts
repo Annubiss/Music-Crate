@@ -40,5 +40,15 @@ export function buildQuery(text: string, filters: Filters, mode: SearchMode): st
         if( ranges.length > 0) parts.push(anyOf("dur", ranges))
     }
 
+    if( filters.decade !== "") {
+        const ranges = filters.decade
+            .split(",")
+            .map(d => Number(d))
+            .filter(start => !Number.isNaN(start))
+            .map(start => `[${start} TO ${start + 9}-12-31]`)
+
+            if( ranges.length > 0) parts.push(anyOf("firstreleasedate", ranges))
+    }
+
     return parts.join(" AND ")
 }
