@@ -24,6 +24,7 @@ function SearchPage() {
   const filters: Filters = {
     genre: searchParams.get("genre") ?? "",
     type: searchParams.get("type") ?? "",
+    category: searchParams.get("category") ?? "",
   }
 
   const fullQuery = buildQuery(query, filters, mode)

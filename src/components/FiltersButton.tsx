@@ -15,6 +15,13 @@ const TYPE_OPTIONS = [
     { value: "single", label: "Single"},
 ]
 
+const CATEGORY_OPTIONS = [
+    {value: "live", label: "Live"},
+    {value: "remix", label: "Remix"},
+    {value: "compilation", label: "Compilation"},
+    {value: "soundtrack", label: "Soundtrack"},
+]
+
 type FilterButtonProps = {
     filters: Filters;
     onChange: (key: keyof Filters, value: string) => void;
@@ -188,6 +195,13 @@ function FiltersButton({ filters, onChange, mode }: FilterButtonProps) {
                         />
                     </FilterSection>
                     )}
+                    <FilterSection title="Category">
+                        <OptionsGroup 
+                            options={CATEGORY_OPTIONS}
+                            value={filters.category}
+                            onChange={value => onChange("category", value)}
+                        />
+                    </FilterSection>
                 </Modal>
             )}
         </>
