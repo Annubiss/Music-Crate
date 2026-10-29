@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { useEffect } from "react"
+import { useEffect, useId } from "react"
 
 type ModalProps = {
     title: string;
@@ -9,6 +9,7 @@ type ModalProps = {
 
 
 function Modal({title, onClose, children}: ModalProps) {
+    const titleId = useId()
 
     useEffect(() => {
         function handleKey(event: KeyboardEvent){
@@ -27,9 +28,12 @@ function Modal({title, onClose, children}: ModalProps) {
                 className="absolute inset-0 bg-black/60"
             />
             <div
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={titleId}
                 className="relative w-full max-w-md bg-surface border border-line rounded-xl p-6"
             >
-                <h2 className="font-display text-2xl tracking-wide mb-4">
+                <h2 id={titleId} className="font-display text-2xl tracking-wide mb-4">
                     {title}
                 </h2>
                 {children}
