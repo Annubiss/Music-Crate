@@ -61,6 +61,16 @@ function SearchPage() {
     updateParam("q", next, true)
   }
 
+  function clearFilters() {
+    setSearchParams(prev => {
+      const params = new URLSearchParams(prev)
+      for (const key of Object.keys(filters)) {
+        params.delete(key)
+      }
+      return params
+    })
+  }
+
   async function runSearch(term: string, searchMode: SearchMode) {
     const trimmed = term.trim()
 
@@ -121,7 +131,7 @@ function SearchPage() {
               >
                 Songs
             </Button>
-            <FiltersButton filters={filters} onChange={updateParam} mode={mode} />
+            <FiltersButton filters={filters} onChange={updateParam} mode={mode} onClear={clearFilters} />
         </div>
 
 

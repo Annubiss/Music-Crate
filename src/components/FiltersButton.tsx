@@ -42,9 +42,10 @@ type FilterButtonProps = {
     filters: Filters;
     onChange: (key: keyof Filters, value: string) => void;
     mode: SearchMode;
+    onClear: () => void;
 }
 
-function FiltersButton({ filters, onChange, mode }: FilterButtonProps) {
+function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) {
     const [isOpen, setIsOpen] = useState(false)
     const [genres, setGenres] = useState<string[]>([])
     const [status, setStatus] = useState<Status>("loading")
@@ -237,6 +238,13 @@ function FiltersButton({ filters, onChange, mode }: FilterButtonProps) {
                             onChange={value => onChange("decade", value)}
                         />
                     </FilterSection>
+                    {active.length > 0 &&(
+                        <div className="mt-6 flex justify-end">
+                            <Button variant="secondary" onClick={onClear}>
+                                Clear all
+                            </Button>
+                        </div>
+                    )}
                 </Modal>
             )}
         </>
