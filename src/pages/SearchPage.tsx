@@ -120,6 +120,7 @@ function SearchPage() {
         <div className="flex gap-2 mb-8">
           <Button
             variant={mode == "albums" ? "primary" : "secondary"}
+            pressed={mode === "albums"}
             onClick={() => setMode("albums")}
             >
               Albums
@@ -127,6 +128,7 @@ function SearchPage() {
 
             <Button
               variant={mode == "songs" ? "primary" : "secondary"}
+              pressed={mode === "songs"}
               onClick={() => setMode("songs")}
               >
                 Songs

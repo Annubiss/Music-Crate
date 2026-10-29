@@ -8,6 +8,7 @@ type ButtonProps = {
     variant?: ButtonVariant;
     size?: ButtonSize;
     label?: string;
+    pressed?: boolean;
 }
 
 export type ButtonSize = "md" | "sm" | "sPageSave"
@@ -26,12 +27,13 @@ const sizes: Record<ButtonSize, string> = {
     sPageSave: "px-9 text-xl min-w-16 text-center h-full"
 }
 
-function Button({children, onClick, variant = "primary", size = "sm", label} : ButtonProps) {
+function Button({children, onClick, variant = "primary", size = "sm", label, pressed} : ButtonProps) {
     return (
         <button type="button"
             onClick={onClick}
             aria-label={label}
             title={label}
+            aria-pressed={pressed}
             className={`${base} ${sizes[size]} ${variants[variant]}`}>
             {children}
         </button>

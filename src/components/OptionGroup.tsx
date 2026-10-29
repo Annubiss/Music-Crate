@@ -28,6 +28,7 @@ function OptionsGroup({options, value, onChange}: OptionGroupProps) {
                 <Button
                     key={option.value}
                     variant={selected.includes(option.value) ? "primary" : "secondary"}
+                    pressed={selected.includes(option.value)}
                     onClick={() => toggle(option.value)}
                 >
                     {option.label}
