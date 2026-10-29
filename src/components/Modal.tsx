@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { useEffect, useId, useRef } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 
 type ModalProps = {
     title: string;
@@ -11,6 +11,7 @@ type ModalProps = {
 function Modal({title, onClose, children}: ModalProps) {
     const titleId = useId()
     const dialogRef = useRef<HTMLDivElement>(null)
+    const [ opener ] = useState(() => document.activeElement)
 
     useEffect(() => {
         function handleKey(event: KeyboardEvent){
@@ -28,7 +29,10 @@ function Modal({title, onClose, children}: ModalProps) {
         if( dialog && !dialog.contains(document.activeElement)){
             dialog.focus()
         }
-    }, [])
+        return () => {
+            if(opener instanceof HTMLElement) opener.focus()
+        }
+    }, [opener])
 
     return(
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
