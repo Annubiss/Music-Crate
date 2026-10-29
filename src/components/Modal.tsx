@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { useEffect, useId } from "react"
+import { useEffect, useId, useRef } from "react"
 
 type ModalProps = {
     title: string;
@@ -10,6 +10,7 @@ type ModalProps = {
 
 function Modal({title, onClose, children}: ModalProps) {
     const titleId = useId()
+    const dialogRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         function handleKey(event: KeyboardEvent){
@@ -21,6 +22,14 @@ function Modal({title, onClose, children}: ModalProps) {
         return () => window.removeEventListener("keydown", handleKey)
     }, [onClose])
 
+    useEffect(() => {
+        const dialog = dialogRef.current
+
+        if( dialog && !dialog.contains(document.activeElement)){
+            dialog.focus()
+        }
+    }, [])
+
     return(
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
             <div
@@ -31,7 +40,9 @@ function Modal({title, onClose, children}: ModalProps) {
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={titleId}
-                className="relative w-full max-w-md bg-surface border border-line rounded-xl p-6"
+                ref={dialogRef}
+                tabIndex={-1}
+                className="relative w-full max-w-md bg-surface border border-line rounded-xl p-6 outline-none"
             >
                 <h2 id={titleId} className="font-display text-2xl tracking-wide mb-4">
                     {title}
