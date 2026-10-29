@@ -1,7 +1,6 @@
 import {useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
-import type { Album } from "../types"
-import type { Song } from "../types"
+import type { Song, Album, Filters, SearchMode } from "../types"
 import { searchAlbums, searchSongs } from "../api/musicbrainz"
 import AlbumCard from "../components/AlbumCard"
 import Button from "../components/Button"
@@ -10,13 +9,11 @@ import AlbumCardSkeleton from "../components/AlbumCardSkeleton"
 import SongCard from "../components/SongCard"
 import SongRow from "../components/SongRow"
 import FiltersButton from "../components/FiltersButton"
-import type { Filters } from "../types"
 import { buildQuery } from "../lib/query"
 
 
 type viewMode = "grid" | "list"
 type Status = "idle" | "loading" | "error" | "success"
-type SearchMode = "albums" | "songs"
 
 function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -29,7 +26,7 @@ function SearchPage() {
     type: searchParams.get("type") ?? "",
   }
 
-  const fullQuery = buildQuery(query, filters)
+  const fullQuery = buildQuery(query, filters, mode)
   const hasFilters = Object.values(filters).some(value => value !== "")
 
   const [albums, setAlbums] = useState<Album[]>([])
@@ -121,7 +118,7 @@ function SearchPage() {
               >
                 Songs
             </Button>
-            <FiltersButton filters={filters} onChange={updateParam}/>
+            <FiltersButton filters={filters} onChange={updateParam} mode={mode} />
         </div>
 
 

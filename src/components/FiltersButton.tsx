@@ -3,7 +3,7 @@ import Button from "./Button";
 import Modal from "./Modal";
 import FilterSection from "./FilterSectionProps";
 import { getGenres } from "../api/musicbrainz";
-import type { Filters } from "../types"
+import type { Filters, SearchMode } from "../types"
 import OptionsGroup from "./OptionGroup";
 
 
@@ -18,9 +18,10 @@ const TYPE_OPTIONS = [
 type FilterButtonProps = {
     filters: Filters;
     onChange: (key: keyof Filters, value: string) => void;
+    mode: SearchMode;
 }
 
-function FiltersButton({ filters, onChange }: FilterButtonProps) {
+function FiltersButton({ filters, onChange, mode }: FilterButtonProps) {
     const [isOpen, setIsOpen] = useState(false)
     const [genres, setGenres] = useState<string[]>([])
     const [status, setStatus] = useState<Status>("loading")
@@ -177,6 +178,7 @@ function FiltersButton({ filters, onChange }: FilterButtonProps) {
                             </ul>
                         )}
                     </FilterSection>
+                    {mode === "albums" && (
                     <FilterSection title="Type">
                         <OptionsGroup 
                             options={TYPE_OPTIONS}
@@ -184,6 +186,7 @@ function FiltersButton({ filters, onChange }: FilterButtonProps) {
                             onChange={value => onChange("type", value)}
                         />
                     </FilterSection>
+                    )}
                 </Modal>
             )}
         </>
