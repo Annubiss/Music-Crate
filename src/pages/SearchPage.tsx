@@ -27,7 +27,7 @@ function SearchPage() {
   }
 
   const fullQuery = buildQuery(query, filters, mode)
-  const hasFilters = Object.values(filters).some(value => value !== "")
+  const hasFilters = buildQuery("", filters, mode) !== ""
 
   const [albums, setAlbums] = useState<Album[]>([])
   const [songs, setSongs] = useState<Song[]>([])
