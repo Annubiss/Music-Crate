@@ -29,7 +29,8 @@ export type Filters = {
     genre: string;
     type: string;
     category: string;
-    duration: string,
+    duration: string;
+    decade: string;
 }
 
 export type SearchMode = "albums" | "songs"

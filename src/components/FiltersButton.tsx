@@ -28,6 +28,16 @@ const DURATION_OPTIONS = [
     { value: "long", label: "Over 6 min"},
 ]
 
+const DECADE_OPTIONS = [
+    { value: "1960", label: "60s"},
+    { value: "1970", label: "70s"},
+    { value: "1980", label: "80s"},
+    { value: "1990", label: "90s"},
+    { value: "2000", label: "00s"},
+    { value: "2010", label: "10s"},
+    { value: "2020", label: "20s"},
+]
+
 type FilterButtonProps = {
     filters: Filters;
     onChange: (key: keyof Filters, value: string) => void;
@@ -219,6 +229,13 @@ function FiltersButton({ filters, onChange, mode }: FilterButtonProps) {
                             />
                         </FilterSection>
                     )}
+                    <FilterSection title="Decade">
+                        <OptionsGroup
+                            options={DECADE_OPTIONS}
+                            value={filters.decade}
+                            onChange={value => onChange("decade", value)}
+                        />
+                    </FilterSection>
                 </Modal>
             )}
         </>

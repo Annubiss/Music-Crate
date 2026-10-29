@@ -25,7 +25,8 @@ function SearchPage() {
     genre: searchParams.get("genre") ?? "",
     type: searchParams.get("type") ?? "",
     category: searchParams.get("category") ?? "",
-    duration: searchParams.get("duration") ?? ""
+    duration: searchParams.get("duration") ?? "",
+    decade: searchParams.get("decade") ?? "",
   }
 
   const fullQuery = buildQuery(query, filters, mode)
