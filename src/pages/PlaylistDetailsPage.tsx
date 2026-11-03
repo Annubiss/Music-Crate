@@ -19,6 +19,7 @@ function PlaylistDetailsPage() {
     if(!playlist) {
         return (
             <div className="py-8">
+                <title>Playlist not found page - Crate</title>
                 <h1 className="font-display text-4xl tracking-wide">
                     Playlist not found
                 </h1>
@@ -50,6 +51,7 @@ function PlaylistDetailsPage() {
 
     return (
         <div className="py-8">
+            <title>{`${playlist.name} - Crate`}</title>
             <div className="mb-8 flex items-center justify-between gap-4">
             <div>
             <h1 className="font-display text-4xl tracking-wide">

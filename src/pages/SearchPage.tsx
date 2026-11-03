@@ -30,6 +30,10 @@ function SearchPage() {
   }
 
   const fullQuery = buildQuery(query, filters, mode)
+  const pageTitle = query.trim() !== ""
+    ? `${query.trim()} - Crate`
+    : "Create - Discover and collect music"
+
   const hasFilters = buildQuery("", filters, mode) !== ""
 
   const [albums, setAlbums] = useState<Album[]>([])
@@ -104,6 +108,7 @@ function SearchPage() {
 
   return (
       <div className="py-8">
+        <title>{pageTitle}</title>
         <h1 className="font-display text-4xl tracking-wide mb-8">Crate</h1>
 
         <form onSubmit={e => e.preventDefault()} className="flex gap-2 mb-4">

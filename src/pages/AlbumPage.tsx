@@ -58,6 +58,7 @@ function AlbumPage() {
     if(status === "error" || !album) {
         return (
             <div className="py-16 text-center">
+                <title>Album not found - Crate</title>
                 <p className="font-display text-2xl text-chalk">Album not found</p>
 
                 <p className="text-fog text-sm mt-2">
@@ -75,6 +76,7 @@ function AlbumPage() {
 
     return (
         <div className="py-8">
+            <title>{`${album.title} by ${album.artist} - Crate`}</title>
             <Link to="/" className="text-fog text-sm hover:text-chalk transition-colors">
             ← Home
             </Link>
