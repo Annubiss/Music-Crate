@@ -1,5 +1,6 @@
 import { NavLink, Outlet } from "react-router"
 import { useState, useEffect } from "react"
+import { loadFromStorage, saveToStorage } from "../lib/storage"
 
 type Theme = "dark" | "light"
 
@@ -17,7 +18,8 @@ const pillButton = "rounded-full border border-line bg-surface " + "px-4 py-2 te
 
 export default function Layout() {
     const [isOpen, setIsOpen] = useState(false)
-    const [theme, setTheme] = useState<Theme>("dark")
+    const [theme, setTheme] = useState<Theme>(() => 
+    loadFromStorage<string>("theme", "dark") === "light" ? "light" : "dark")
 
     useEffect(() => {
         if(!isOpen) return
@@ -37,6 +39,7 @@ export default function Layout() {
 
     useEffect(() => {
         document.documentElement.dataset.theme = theme
+        saveToStorage("theme", theme)
     }, [theme])
 
     return (
