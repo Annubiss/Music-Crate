@@ -19,6 +19,7 @@ function CollectionPage() {
 
     return (
         <div className="py-8">
+            <title>Collection - Crate</title>
             <h1 className="font-display text-4xl tracking-wide mb-8">
                 Collection
             </h1>

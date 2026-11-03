@@ -21,6 +21,7 @@ function PlaylistsPage() {
 
     return (
         <div className="py-8">
+            <title>Playlists - Crate</title>
         <div className="mb-8 flex items-center justify-between gap-4">
             <div>
                 <h1 className="font-display text-4xl tracking-wide">
