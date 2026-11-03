@@ -35,6 +35,23 @@
     }
 }
 
+:root {
+    color-scheme: dark;
+}
+
+[data-theme="light"] {
+    color-scheme: light;;
+
+    --color-ink: #FAFAF9;
+    --color-surface: #FFFFFF;
+    --color-line: #E4E4E7;
+    --color-fog: #52525B;
+    --color-chalk: #18181B;
+    --color-accent: #A16207;
+    --color-on-accent: #FFFFFF;
+    --color-danger: #FEE2E2;
+}
+
 body {
     background-color: var(--color-ink);
     color: var(--color-chalk);
