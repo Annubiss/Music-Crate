@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from "react-router"
 import { useState, useEffect } from "react"
 
+type Theme = "dark" | "light"
 
 const navLinks =[
     { to: "/", label:"Search" },
@@ -16,6 +17,7 @@ const pillButton = "rounded-full border border-line bg-surface " + "px-4 py-2 te
 
 export default function Layout() {
     const [isOpen, setIsOpen] = useState(false)
+    const [theme, setTheme] = useState<Theme>("dark")
 
     useEffect(() => {
         if(!isOpen) return
@@ -32,6 +34,10 @@ export default function Layout() {
             window.removeEventListener("keydown", handleKeyDown)
         }
     }, [isOpen])
+
+    useEffect(() => {
+        document.documentElement.dataset.theme = theme
+    }, [theme])
 
     return (
         <div
@@ -85,6 +91,40 @@ export default function Layout() {
                         </NavLink>
                     ))}
                 </nav>
+                <button
+                    type="button"
+                    role="switch"
+                    aria-checked={theme === "light"}
+                    aria-label="Light theme"
+                    onClick={() => setTheme(prev => (prev === "dark" ? "light" : "dark"))}
+                    className={"relative mt-12 w-16 h-8 rounded-full bg-line cursor-pointer " +
+                        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    }
+                >
+                    <span
+                        className={"absolute top-1 left-1 w-6 h-6 rounded-full bg-accent " +
+                            "motion-safe:transition-transform motion-safe:duration-200 " +
+                            (theme === "dark" ? "translate-x-8" : "translate-x-0")
+                        }
+                    />
+                    <span
+                        aria-hidden="true"
+                        className={"absolute top-1 left-1 w-6 h-6 flex items-center justify-center " +
+                            "text-sm transition-colors " + (theme === "light" ? "text-on-accent" : "text-fog")
+                        }
+                    >
+                        ☀
+                    </span>
+
+                    <span
+                        aria-hidden="true"
+                        className={"absolute top-1 right-1 w-6 h-6 flex items-center justify-center " +
+                            "text-sm transition-colors " + (theme === "dark" ? "text-on-accent" : "text-fog")
+                        }
+                    >
+                        ☾
+                    </span>
+                </button>
             </aside>
 
             <main className="max-w-4xl mx-auto px-4 pt-12">
