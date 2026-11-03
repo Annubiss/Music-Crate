@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router"
 import { useState, useEffect } from "react"
-import { loadFromStorage, saveToStorage } from "../lib/storage"
+import {  saveToStorage } from "../lib/storage"
 
 type Theme = "dark" | "light"
 
