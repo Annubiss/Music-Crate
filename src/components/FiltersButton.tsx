@@ -152,7 +152,7 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
                         {isListOpen && (
                             <div
                                 className={"absolute left-0 right-0 top-full mt-1 z-10 bg-surface border border-line " +
-                                    "rounded-lg max-h-60 overflow-y-auto"}
+                                    "rounded-lg max-h-60 overflow-y-auto motion-safe:animate-slide-down"}
                             >
 
                         {status === "loading" && (

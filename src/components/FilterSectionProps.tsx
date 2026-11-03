@@ -26,7 +26,7 @@ function FilterSection({title, children}: FilterSectionProps) {
             </button>
 
             {isExpanded && (
-                <div className="pt-2 pb-4">
+                <div className="pt-2 pb-4 motion-safe:animate-slide-down">
                     {children}
                 </div>
             )}
