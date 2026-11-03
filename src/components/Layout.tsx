@@ -19,7 +19,7 @@ const pillButton = "rounded-full border border-line bg-surface " + "px-4 py-2 te
 export default function Layout() {
     const [isOpen, setIsOpen] = useState(false)
     const [theme, setTheme] = useState<Theme>(() => 
-    loadFromStorage<string>("theme", "dark") === "light" ? "light" : "dark")
+    document.documentElement.dataset.theme === "light" ? "light" : "dark")
 
     useEffect(() => {
         if(!isOpen) return
@@ -39,8 +39,14 @@ export default function Layout() {
 
     useEffect(() => {
         document.documentElement.dataset.theme = theme
-        saveToStorage("theme", theme)
     }, [theme])
+
+    function toggleTheme() {
+        const next: Theme = theme === "dark" ? "light" : "dark"
+
+        setTheme(next)
+        saveToStorage("theme", next)
+    }
 
     return (
         <div
@@ -99,7 +105,7 @@ export default function Layout() {
                     role="switch"
                     aria-checked={theme === "light"}
                     aria-label="Light theme"
-                    onClick={() => setTheme(prev => (prev === "dark" ? "light" : "dark"))}
+                    onClick={toggleTheme}
                     className={"relative mt-12 w-16 h-8 rounded-full bg-line cursor-pointer " +
                         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                     }
