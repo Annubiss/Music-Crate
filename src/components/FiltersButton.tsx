@@ -187,7 +187,7 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
                                 {selected.map(g => (
                                     <li 
                                         key={g}
-                                        className={"flex items-center gap-1 bg-accent text-ink rounded-full pl-3 " +
+                                        className={"flex items-center gap-1 bg-accent text-on-accent rounded-full pl-3 " +
                                             "pr-1 py-1 text-sm motion-safe:animate-pop-in"}
                                     
                                     >

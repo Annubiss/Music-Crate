@@ -16,7 +16,7 @@ export type ButtonSize = "md" | "sm" | "sPageSave"
 const base = "text-sm font-medium transition active:scale-95 cursor-pointer"
 
 const variants: Record<ButtonVariant, string> = {
-    primary: "bg-accent text-ink hover:brightness-110",
+    primary: "bg-accent text-on-accent hover:brightness-110",
     secondary:"border border-line text-fog hover:text-chalk hover:border-fog",
     danger: "bg-danger hover:border-fog hover:brightness-125"
 };
