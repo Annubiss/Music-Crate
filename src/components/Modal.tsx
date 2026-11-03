@@ -60,7 +60,7 @@ function Modal({title, onClose, children}: ModalProps) {
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
             <div
                 onClick={onClose}
-                className="absolute inset-0 bg-black/60"
+                className="absolute inset-0 bg-black/60 motion-safe:animate-fade-in"
             />
             <div
                 role="dialog"
@@ -68,7 +68,8 @@ function Modal({title, onClose, children}: ModalProps) {
                 aria-labelledby={titleId}
                 ref={dialogRef}
                 tabIndex={-1}
-                className="relative w-full max-w-md bg-surface border border-line rounded-xl p-6 outline-none"
+                className={"relative w-full max-w-md bg-surface border border-line rounded-xl p-6 outline-none " + 
+                    "motion-safe:animate-pop-in"}
             >
                 <h2 id={titleId} className="font-display text-2xl tracking-wide mb-4">
                     {title}
