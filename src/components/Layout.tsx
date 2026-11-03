@@ -6,7 +6,6 @@ type Theme = "dark" | "light"
 
 const navLinks =[
     { to: "/", label:"Search" },
-    { to: "/genres", label: "Genres" },
     { to: "/collection", label: "Collection" },
     {to: "/playlists", label: "Playlists"},
 ]
