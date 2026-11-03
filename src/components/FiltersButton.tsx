@@ -188,7 +188,7 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
                                     <li 
                                         key={g}
                                         className={"flex items-center gap-1 bg-accent text-ink rounded-full pl-3 " +
-                                            "pr-1 py-1 text-sm"}
+                                            "pr-1 py-1 text-sm motion-safe:animate-pop-in"}
                                     
                                     >
                                         <span className="capitalize">{g}</span>

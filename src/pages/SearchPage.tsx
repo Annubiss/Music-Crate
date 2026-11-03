@@ -182,13 +182,13 @@ function SearchPage() {
         )}
         {status === "success" && mode == "albums" && resultCount > 0 && (
           view === "grid" ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 motion-safe:animate-fade-in">
             {albums.map(album => (
               <AlbumCard key={album.id} album={album} />
             ))}
           </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2 motion-safe:animate:fade-in">
               {albums.map(album => (
                 <AlbumRow key={album.id} album={album} />
               ))}
@@ -200,13 +200,13 @@ function SearchPage() {
 
         {status == "success" && mode == "songs" && resultCount > 0 && (
           view == "grid" ? (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 motion-safe:animate-fade-in">
               {songs.map(song => (
                 <SongCard key={song.id} song={song} />
               ))}
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2 motion-safe:animate-fade-in">
               {songs.map(song => (
                 <SongRow key={song.id} song={song}/>
               ))}
