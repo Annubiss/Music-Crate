@@ -23,7 +23,7 @@ function OptionsGroup({options, value, onChange}: OptionGroupProps) {
     }
 
     return (
-        <div>
+        <div className="flex flex-wrap gap-2">
             {options.map(option => (
                 <Button
                     key={option.value}
