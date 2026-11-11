@@ -168,8 +168,16 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
                         {status === "success" && (
                             <ul>
                                 {visibleGenres.map(g => (
-                                    <li key={g} className="capitalize text-sm px-4 py-2">
-                                        {g}
+                                    <li key={g}>
+                                        <button
+                                            type="button"
+                                            onClick={() => addGenre(g)}
+                                            className={"w-full text-left capitalize px-3 py-2 hover:text-accent " 
+                                                + "focus-visible:text-accent outline-none cursor-pointer"
+                                            }
+                                        >
+                                            {g}
+                                        </button>
                                     </li>
                                 ))}
                             </ul>
