@@ -115,7 +115,8 @@ function SearchPage() {
           <input
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Search artist or album"
+          placeholder={mode === "albums" ? "Search album" : "Search song"}
+          aria-label={mode === "albums" ? "Search albums" : "Search song"}
           className="flex-1 bg-surface border border-line rounded-lg px-4 py-2 text-chalk placeholder:text-fog focus:outline-none focus:border-accent"
           />
         
