@@ -11,7 +11,7 @@ type ButtonProps = {
     pressed?: boolean;
 }
 
-export type ButtonSize = "md" | "sm" | "sPageSave"
+export type ButtonSize = "md" | "sm" | "sPageSave" | "icon"
 
 const base = "text-sm font-medium transition active:scale-95 cursor-pointer"
 
@@ -24,7 +24,8 @@ const variants: Record<ButtonVariant, string> = {
 const sizes: Record<ButtonSize, string> = {
     md: "px-4 py-2 text-sm min-w-24 text-center rounded-lg",
     sm: "px-2 py-2 text-xs min-w-20 text-center rounded-lg",
-    sPageSave: "px-9 text-xl min-w-16 text-center h-full"
+    sPageSave: "px-9 text-xl min-w-16 text-center h-full",
+    icon: "w-9 h-9 flex items-center justify-center rounded-lg"
 }
 
 function Button({children, onClick, variant = "primary", size = "sm", label, pressed} : ButtonProps) {

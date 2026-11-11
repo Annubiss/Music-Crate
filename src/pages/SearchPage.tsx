@@ -10,6 +10,7 @@ import SongCard from "../components/SongCard"
 import SongRow from "../components/SongRow"
 import FiltersButton from "../components/FiltersButton"
 import { buildQuery } from "../lib/query"
+import { LayoutGrid, List } from "lucide-react"
 
 
 type viewMode = "grid" | "list"
@@ -123,7 +124,7 @@ function SearchPage() {
         </form>
 
 
-        <div className="flex gap-2 mb-8">
+        <div className="flex flex-wrap gap-2 mb-8">
           <Button
             variant={mode == "albums" ? "primary" : "secondary"}
             pressed={mode === "albums"}
@@ -140,6 +141,26 @@ function SearchPage() {
                 Songs
             </Button>
             <FiltersButton filters={filters} onChange={updateParam} mode={mode} onClear={clearFilters} />
+            <div className="ml-auto flex gap-1">
+              <Button
+                size="icon"
+                variant={view === "grid" ? "primary" : "secondary"}
+                pressed={view === "grid"}
+                label="Grid view"
+                onClick={() => setView("grid")}
+              >
+                <LayoutGrid aria-hidden="true" className="w-4 h-4" />
+              </Button>
+              <Button
+                size="icon"
+                variant={view === "list" ? "primary" : "secondary"}
+                pressed={view === "list"}
+                label="List view"
+                onClick={() => setView("list")}
+              >
+                <List aria-hidden="true" className="w-4 h-4" />
+              </Button>
+            </div>
         </div>
 
 
@@ -215,13 +236,6 @@ function SearchPage() {
           )
         
         )}
-
-
-       
-
-        <Button variant="secondary" onClick={() => setView(view ==="grid" ? "list" : "grid")}>
-          Switch to {view === "grid" ? "list" : "grid"} 
-        </Button>
       </div>
     )
 }
