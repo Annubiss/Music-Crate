@@ -35,19 +35,21 @@ function AddToPlaylistButton({song, size = "md"}: AddToPlaylistButtonProps) {
                         return(
                         <li
                             key={playlist.id}
-                            className="flex items-center justify-between gap-4 border border-line rounded-lg p-3"
+                            className={"flex items-center gap-3 border border-line rounded-lg p-3 " + 
+                                "cursor-pointer hover:border-fog transition-colors"}
                         >
-                            <span className="truncate">{playlist.name}</span>
-                            <Button
-                                variant={inPlaylist ? "danger" : "primary"}
-                                label={inPlaylist ? `Remove from ${playlist.name}` : `Add to ${playlist.name}`}
-                                onClick={() => inPlaylist
+                            <input 
+                                type="checkbox"
+                                checked={inPlaylist}
+                                onChange={() => inPlaylist
                                     ? removeSong(playlist.id, song.id)
-                                    : addSong(playlist.id, song)
+                                    : addSong(playlist.id, song)   
                                 }
-                            >
-                                {inPlaylist ? "-" : "+"}
-                            </Button>
+                                className="w-5 h-5 shrink-0 accent-accent cursor-pointer"
+                            />
+
+                            <span className="truncate">{playlist.name}</span>
+
                         </li>
                     )})}
                 </ul>     
