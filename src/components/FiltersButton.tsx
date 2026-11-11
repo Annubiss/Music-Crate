@@ -119,7 +119,7 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
 
             {isOpen && (
                 <Modal title="Filters" onClose={() => setIsOpen(false)}>
-                    <FilterSection title="Genre">
+                    <FilterSection title="Genre" defaultOpen={selected.length > 0}>
 
                         <div className="relative">
                             <div className="flex border border-line rounded-lg focus-within:border-accent">
@@ -207,7 +207,7 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
                         )}
                     </FilterSection>
                     {mode === "albums" && (
-                    <FilterSection title="Type">
+                    <FilterSection title="Type" defaultOpen={filters.type !== ""}>
                         <OptionsGroup 
                             options={TYPE_OPTIONS}
                             value={filters.type}
@@ -215,7 +215,7 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
                         />
                     </FilterSection>
                     )}
-                    <FilterSection title="Category">
+                    <FilterSection title="Category" defaultOpen={filters.category !== ""}>
                         <OptionsGroup 
                             options={CATEGORY_OPTIONS}
                             value={filters.category}
@@ -231,7 +231,7 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
                             />
                         </FilterSection>
                     )}
-                    <FilterSection title="Decade">
+                    <FilterSection title="Decade" defaultOpen={filters.decade !== ""}>
                         <OptionsGroup
                             options={DECADE_OPTIONS}
                             value={filters.decade}

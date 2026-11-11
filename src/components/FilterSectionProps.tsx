@@ -4,10 +4,11 @@ import type { ReactNode } from "react";
 type FilterSectionProps = {
     title: string;
     children: ReactNode;
+    defaultOpen?: boolean;
 }
 
-function FilterSection({title, children}: FilterSectionProps) {
-    const [isExpanded, setIsExpanded] = useState(false)
+function FilterSection({title, children, defaultOpen = false}: FilterSectionProps) {
+    const [isExpanded, setIsExpanded] = useState(defaultOpen)
 
     return (
         <section className="border-b border-line last:border-b-0">
