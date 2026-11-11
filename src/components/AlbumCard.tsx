@@ -10,7 +10,7 @@ type AlbumCardProps = {
 function AlbumCard({ album } : AlbumCardProps) {
     return (
         <div className={
-            "bg-surface border border-line rounded-lg overflow-hidden hover:border-fog transition-colors " + 
+            "bg-surface border border-line rounded-lg overflow-hidden hover:border-fog transition-colors flex flex-col " + 
             "has-[button:hover]:border-line"
         }>
 
@@ -22,7 +22,7 @@ function AlbumCard({ album } : AlbumCardProps) {
                 />
             </Link>
 
-            <div className="flex items-stretch">
+            <div className="flex items-stretch flex-1">
                 <Link
                     to={`/album/${album.id}`}
                     className="min-w-0 flex-1 px-4 py-3">

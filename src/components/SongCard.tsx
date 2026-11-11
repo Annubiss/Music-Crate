@@ -8,13 +8,13 @@ type SongCardProps = {
 
 function SongCard({ song }: SongCardProps) {
     return (
-        <div className="bg-surface border border-line rounded-lg overflow-hidden">
+        <div className="bg-surface border border-line rounded-lg overflow-hidden flex flex-col">
             <Cover 
                 src={song.coverUrl}
                 title={song.title}
                 className="w-full aspect-square"
                 />
-            <div className="flex items-stretch">
+            <div className="flex items-stretch flex-1">
                 <div className="min-w-0 flex-1 px-4 py-3">
                     <h2 className="font-display text-lg text-chalk truncate">
                         {song.title}

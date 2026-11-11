@@ -4,6 +4,7 @@ import type { ButtonSize } from "./Button"
 import { useState } from "react"
 import Modal from "./Modal"
 import { usePlaylists } from "../context/PlaylistsContext"
+import { ListPlus } from "lucide-react"
 
 type AddToPlaylistButtonProps = {
     song: Song;
@@ -17,10 +18,10 @@ function AddToPlaylistButton({song, size = "md"}: AddToPlaylistButtonProps) {
         <>
         <Button 
             size={size}
-            label="Add to playlist"
+            label={`Add ${song.title} to a playlist`}
             onClick={() => setIsOpen(true)}
         >
-            +
+            <ListPlus aria-hidden="true" className="w-5 h-5 mx-auto" />
         </Button>
 
         {isOpen && (
