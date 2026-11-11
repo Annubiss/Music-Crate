@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import Button from "./Button";
 import Modal from "./Modal";
 import FilterSection from "./FilterSectionProps";
@@ -51,6 +51,7 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
     const [status, setStatus] = useState<Status>("loading")
     const [isListOpen, setIsListOpen] = useState(false)
     const [search, setSearch] = useState("")
+    const hintId = useId()
 
     useEffect(() => {
         if(!isOpen) return
@@ -125,6 +126,7 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
                             <div className="flex border border-line rounded-lg focus-within:border-accent">
                                 <input 
                                     aria-label="Add a genre"
+                                    aria-describedby={hintId}
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
                                     onKeyDown={e => {
@@ -181,6 +183,11 @@ function FiltersButton({ filters, onChange, mode, onClear }: FilterButtonProps) 
                         </div>
                             )}
                         </div>
+
+                        <p id={hintId} className="text-fog text-xs mt-2">
+                            Type a genre and press Enter, or pick one from the list.
+                        </p>
+
 
                         {selected.length > 0 && (
                             <ul className="flex flex-wrap gap-2 mt-3">
