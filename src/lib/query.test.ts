@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { buildQuery } from "./query";
 import type { Filters } from "../types";
 
-const noFilters = {
+const noFilters: Filters = {
     genre: "",
     type: "",
     category: "",
