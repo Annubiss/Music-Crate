@@ -10,11 +10,11 @@ function FilterSection({title, children}: FilterSectionProps) {
     const [isExpanded, setIsExpanded] = useState(false)
 
     return (
-        <section>
+        <section className="border-b border-line last:border-b-0">
             <button
                 type="button"
                 onClick={() => setIsExpanded(prev => !prev)}
-                className={"flex items-center gap-1 py-2 text-sm text-fog hover:text-accent focus-visible:text-accent " + 
+                className={"flex w-full items-center gap-1 py-3 text-sm text-fog hover:text-accent focus-visible:text-accent " + 
                     "outline-none cursor-pointer transition-colors"}
             >
                 {title}
