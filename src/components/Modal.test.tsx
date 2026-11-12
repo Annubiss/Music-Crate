@@ -20,4 +20,15 @@ describe("Modal", () => {
 
         expect(onClose).toHaveBeenCalledOnce()
     })
+
+    it("Closes when close button is clicked", async () => {
+        const user = userEvent.setup()
+        const onClose = vi.fn()
+
+        render(<Modal title="Filters" onClose={onClose}><p>Content</p></Modal>)
+
+        await user.click(screen.getByRole("button", {name: "Close"}))
+
+        expect(onClose).toHaveBeenCalledOnce()
+    })
 })
