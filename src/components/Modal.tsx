@@ -1,5 +1,7 @@
 import type { ReactNode } from "react"
 import { useEffect, useId, useRef, useState } from "react"
+import { X } from "lucide-react"
+import Button from "./Button"
 
 const FOCUSABLE = "button:not([disabled]), input:not([disabled]), a[href], select, textarea"
 
@@ -71,9 +73,14 @@ function Modal({title, onClose, children}: ModalProps) {
                 className={"relative w-full max-w-md bg-surface border border-line rounded-xl p-6 outline-none " + 
                     "motion-safe:animate-pop-in"}
             >
-                <h2 id={titleId} className="font-display text-2xl tracking-wide mb-4">
-                    {title}
-                </h2>
+                <div className="flex items-start justify-between gap-4 mb-4">
+                    <h2 id={titleId} className="font-display text-2xl tracking-wide">
+                        {title}
+                    </h2>
+                    <Button size="icon" variant="secondary" label="Close" onClick={onClose}>
+                        <X aria-hidden="true" className="w-5 h-5"/>
+                    </Button>
+                </div>
                 {children}
             </div>
 
