@@ -31,4 +31,31 @@ describe("PlaylistsPage", () => {
 
         expect(screen.getByRole("link", {name: "Gym"})).toBeInTheDocument
     })
+
+    it("Does not crate a playlist without a name", async () =>{
+        const user = userEvent.setup()
+        renderPage()
+
+        await user.click(screen.getByRole("button", {name: "Add playlist"}))
+        await user.type(screen.getByRole("textbox", {name: "Playlist name"}), "  ")
+        await user.click(screen.getByRole("button", {name: "Create"}))
+
+        expect(screen.queryByRole("link")).not.toBeInTheDocument()
+    })
+
+    it("Keeps playlists after the page is opened again", async() => {
+        const user = userEvent.setup()
+        const { unmount } = renderPage()
+
+        await user.click(screen.getByRole("button", {name: "Add playlist"}))
+        await user.type(screen.getByRole("textbox", {name: "Playlist name"}), "Gym")
+        await user.click(screen.getByRole("button", {name: "Create"}))
+
+        unmount()
+
+        renderPage()
+
+        expect(screen.getByRole("link", {name: "Gym"})).toBeInTheDocument()
+
+    })
 })
