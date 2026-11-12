@@ -127,6 +127,7 @@ function PlaylistDetailsPage() {
                                 value={newName}
                                 onChange={e => setNewName(e.target.value)}
                                 autoFocus
+                                aria-label="Playlist name"
                                 className="flex-1 bg-surface border border-line rounded-lg px-4 py-2 focus-visible:outline-accent"
                             />
                             <Button onClick={handleRename}>Save</Button>

@@ -69,6 +69,7 @@ function PlaylistsPage() {
                                 value={newName}
                                 onChange={e => setNewName(e.target.value)}
                                 placeholder="New playlist name"
+                                aria-label="Playlist name"
                                 className={"flex-1 bg-surface border border-line rounded-lg px-4 py-2 placeholder:text-fog " + 
                                         "focus-visible:outline-accent"}
                             
