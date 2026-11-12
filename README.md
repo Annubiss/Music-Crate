@@ -2,7 +2,7 @@
 
 Crate is a web app for discovering music and keeping track of what you like. You can search albums and songs, filter them by genre, type, decade and more, save albums to your own collection and build playlists. All the music data comes from the public [MusicBrainz](https://musicbrainz.org/) API.
 
-**Live:** [link to the Netlify site]
+**Live:** https://musiccrate-adil.netlify.app
 
 ![Search page](docs/search.png)
 ![Filters](docs/filters.png)
